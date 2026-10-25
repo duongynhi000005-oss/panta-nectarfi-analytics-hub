@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panta x NectarFi Analytics Hub & Kelly Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Application Header -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-badge">⚡</div>
+      <div class="logo-text">
+        <h1>Panta x NectarFi Analytics Hub</h1>
+        <p>Quantitative Prediction Market Sizing, Leaderboard Analytics & Market Creation Suite</p>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge-pill">
+        <span class="dot"></span>
+        <span>Solana Mainnet</span>
+      </div>
+      <div class="badge-pill" style="border-color: rgba(0, 255, 163, 0.4); color: var(--panta-green);">
+        <span>Superteam Earn: $500 USDG Bounty</span>
+      </div>
+      <a href="https://go.panta.market/bounty" target="_blank" class="btn-primary" style="padding:0.4rem 0.9rem; font-size:0.8rem; text-decoration:none;">
+        Open Panta App ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="tabCalculator">
+        <span>📐</span> Kelly Criterion & EV Calculator
+      </button>
+      <button class="tab-btn" data-tab="tabLeaderboard">
+        <span>🏆</span> NectarFi Leaderboard Simulator
+      </button>
+      <button class="tab-btn" data-tab="tabWizard">
+        <span>🛠️</span> Market Creation Wizard
+      </button>
+      <button class="tab-btn" data-tab="tabSocial">
+        <span>🧵</span> Viral Content & X Thread Kit
+      </button>
+      <button class="tab-btn" data-tab="tabInfographics">
+        <span>📊</span> Infographics & AMM Architecture
+      </button>
+    </nav>
+
+    <!-- TAB 1: Kelly Criterion & EV Calculator -->
+    <div id="tabCalculator" class="tab-pane active">
+      <div class="calc-grid">
+
+        <!-- Controls Column -->
+        <section class="card">
+          <div class="card-header">
+            <h2><span>🎯</span> Trade Parameters</h2>
+            <div id="edgeBadge" class="badge-pill">Calculating...</div>
+          </div>
+
+          <!-- Total Bankroll -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Total Available Capital / Bankroll</span>
+              <span style="color:var(--text-muted);">USD</span>
+            </label>
+            <input id="bankrollInput" type="number" class="input-box input-box-number" value="1000" min="10" step="10">
+          </div>
+
+          <!-- Outcome Choice -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Outcome Token</span>
+              <span style="color:var(--text-muted);">Binary Contract</span>
+            </label>
+            <div class="toggle-group">
+              <div id="toggleYes" class="toggle-opt active yes">YES Outcome</div>
+              <div id="toggleNo" class="toggle-opt no">NO Outcome</div>
+            </div>
+          </div>
+
+          <!-- Current Market Share Price -->
+          <div class="form-group">
+            <div class="form-label">
+              <span>Current Market Share Price ($)</span>
+              <span id="marketPriceDisplay" style="color:var(--panta-green); font-family:var(--font-mono); font-weight:700;">$0.40</span>
+            </div>
+            <input id="marketPriceSlider" type="range" class="range-slider" min="0.01" max="0.99" step="0.01" value="0.40">
+            <input id="marketPriceInput" type="number" class="input-box input-box-number" style="margin-top:0.4rem;" value="0.40" min="0.01" max="0.99" step="0.01">
+          </div>
+
+          <!-- Estimated True Probability -->
+          <div class="form-group">
+            <div class="form-label">
+              <span>Your Estimated True Probability (%)</span>
+              <span id="trueProbDisplay" style="color:var(--nectar-gold); font-family:var(--font-mono); font-weight:700;">60%</span>
+            </div>
+            <input id="trueProbSlider" type="range" class="range-slider" min="1" max="99" step="1" value="60">
+            <input id="trueProbInput" type="number" class="input-box input-box-number" style="margin-top:0.4rem;" value="60" min="1" max="99" step="1">
+          </div>
+
+          <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.5; margin-top:1rem;">
+            💡 <strong>Kelly Criterion Principle:</strong> When your estimated probability exceeds the market implied probability, Kelly calculates the exact wager size that maximizes long-term compound growth while avoiding ruin.
+          </div>
+        </section>
+
+        <!-- Results Column -->
+        <section>
+          <!-- KPI Row -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-title">Half-Kelly Recommended Wager</div>
+              <div id="kpiRecommendedBet" class="kpi-value" style="color:var(--panta-green);">$166.67</div>
+              <div class="kpi-subtext">Conservative risk-adjusted sizing</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Full Kelly Fraction (f*)</div>
+              <div id="kpiKellyFraction" class="kpi-value" style="color:var(--cyber-cyan);">33.3%</div>
+              <div class="kpi-subtext">Uncapped theoretical allocation</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Expected Value (EV)</div>
+              <div id="kpiExpectedValue" class="kpi-value" style="color:var(--nectar-gold);">+$0.20</div>
+              <div class="kpi-subtext">Per $1 risked</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Expected ROI</div>
+              <div id="kpiExpectedRoi" class="kpi-value" style="color:var(--panta-green);">+50.0%</div>
+              <div class="kpi-subtext">Return on investment</div>
+            </div>
+          </div>
+
+          <!-- Secondary Metrics -->
+          <div class="kpi-row" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="kpi-card">
+              <div class="kpi-title">Net Profit if Event Resolves TRUE</div>
+              <div id="kpiPotentialProfit" class="kpi-value" style="font-size:1.35rem; color:var(--panta-green);">+$250.00</div>
+              <div class="kpi-subtext">Gross payout minus stake</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Gross Payout Multiplier</div>
+              <div id="kpiPayoutMultiplier" class="kpi-value" style="font-size:1.35rem; color:#fff;">2.50x</div>
+              <div class="kpi-subtext">Redeems at $1.00 per share</div>
+            </div>
+          </div>
+
+          <!-- Profit / Loss Visual Chart -->
+          <div class="card" style="padding:1.25rem;">
+            <div class="card-header" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
+              <h2><span>📊</span> Payoff Distribution</h2>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Asymmetric upside for mispriced markets</span>
+            </div>
+            <div style="width:100%; height:200px; position:relative;">
+              <canvas id="profitChartCanvas"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: NectarFi Leaderboard Simulator -->
+    <div id="tabLeaderboard" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2><span>🏆</span> NectarFi x Panta Trading Competition Leaderboard Simulator</h2>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;">
+              Track simulated leaderboard rankings and project your prize tier for the $1,000 Leaderboard Prize Pool!
+            </p>
+          </div>
+          <div class="badge-pill" style="border-color:var(--nectar-gold); color:var(--nectar-gold);">
+            <span>$1,000 Leaderboard Pool</span>
+          </div>
+        </div>
+
+        <!-- Volume Simulator Bar -->
+        <div style="background:var(--bg-secondary); padding:1.25rem; border-radius:var(--radius-sm); margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:1.5rem; align-items:center;">
+          <div style="flex:1; min-width:220px;">
+            <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Simulate Your Planned Volume ($ USD)</label>
+            <input id="simVolumeInput" type="number" class="input-box" value="15000" style="margin-top:0.3rem;" step="500">
+          </div>
+          <div style="background:var(--bg-card); padding:0.8rem 1.25rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted);">Projected Rank</div>
+            <div id="projectedRank" style="font-size:1.4rem; font-weight:800; font-family:var(--font-mono); color:var(--nectar-gold);">#4</div>
+          </div>
+          <div style="background:var(--bg-card); padding:0.8rem 1.25rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+            <div style="font-size:0.75rem; color:var(--text-muted);">Projected Prize Share</div>
+            <div id="projectedPrize" style="font-size:1.4rem; font-weight:800; font-family:var(--font-mono); color:var(--panta-green);">$200 USDG</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Trader Address</th>
+                <th>Trading Volume</th>
+                <th>Realized PnL</th>
+                <th>Activity</th>
+                <th>Prize Tier</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Market Creation Wizard -->
+    <div id="tabWizard" class="tab-pane">
+      <div class="calc-grid">
+
+        <!-- Form Column -->
+        <section class="card">
+          <div class="card-header">
+            <h2><span>🛠️</span> Permissionless Market Creation Form</h2>
+            <span style="font-size:0.75rem; color:var(--panta-green);">Community Markets</span>
+          </div>
+
+          <form id="marketWizardForm" onsubmit="return false;">
+            <div class="form-group">
+              <label class="form-label">
+                <span>Market Question / Title</span>
+                <span style="color:var(--text-muted);">Must end with '?'</span>
+              </label>
+              <input id="wizTitle" type="text" class="input-box" placeholder="e.g. Will Solana reach an all-time high above $260 before Dec 2026?">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Category</span>
+                <span style="color:var(--text-muted);">Panta Taxonomy</span>
+              </label>
+              <select id="wizCategory" class="input-box" style="cursor:pointer;">
+                <option value="Solana Ecosystem" selected>Solana Ecosystem</option>
+                <option value="Crypto">Crypto</option>
+                <option value="DeFi">DeFi</option>
+                <option value="Macro & Economy">Macro & Economy</option>
+                <option value="Tech & AI">Tech & AI</option>
+                <option value="Pop Culture & Sports">Pop Culture & Sports</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Resolution Criteria (Detailed)</span>
+                <span style="color:var(--text-muted);">Unambiguous Rules</span>
+              </label>
+              <textarea id="wizCriteria" class="input-box" rows="3" placeholder="e.g. Resolves to YES if Binance SOL/USDT 1-minute close price touches $260.00 or higher before the resolution timestamp."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Resolution Source / Oracle URL</span>
+                <span style="color:var(--text-muted);">Official Link</span>
+              </label>
+              <input id="wizSourceUrl" type="url" class="input-box" placeholder="https://www.binance.com/en/trade/SOL_USDT">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Resolution Date & Time (UTC)</span>
+                <span style="color:var(--text-muted);">Future date</span>
+              </label>
+              <input id="wizDate" type="datetime-local" class="input-box" value="2026-12-31T23:59">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span>Initial Liquidity Seeding (USD)</span>
+                <span style="color:var(--text-muted);">Minimum $1</span>
+              </label>
+              <input id="wizLiquidity" type="number" class="input-box" value="25" min="1">
+            </div>
+
+            <div id="wizardValidationAlert" style="margin-bottom:1rem; font-size:0.85rem; font-weight:700;"></div>
+          </form>
+        </section>
+
+        <!-- JSON Preview Column -->
+        <section class="card">
+          <div class="card-header">
+            <h2><span>📋</span> Generated Panta Market Schema</h2>
+            <button id="copyMarketJsonBtn" class="btn-secondary">Copy JSON Metadata</button>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">
+            Participants who create relevant and engaging markets on Panta receive additional consideration during bounty winner selection!
+          </p>
+          <pre id="marketJsonPreview" style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1rem; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:0.8rem; color:var(--panta-green); overflow-x:auto; max-height:420px;">
+// Fill out the form on the left to generate verified Panta market deployment JSON!
+          </pre>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: Viral Content & X Thread Kit -->
+    <div id="tabSocial" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2><span>🧵</span> Viral X/Twitter Thread Kit for #PantaMarkets</h2>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;">
+              Ready-to-publish educational thread promoting the NectarFi competition. Pre-tagged with <code>@PantaHQ</code>, <code>@Nectar_finance</code>, <code>@SuperteamNG</code>, and <code>#PantaMarkets</code>!
+            </p>
+          </div>
+          <button class="btn-primary" onclick="copyFullThread()">
+            Copy Full 6-Tweet Thread
+          </button>
+        </div>
+
+        <!-- Tweet 1 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 1/6 (The Hook)</span>
+            <button class="btn-secondary" onclick="copyTweet(1)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_1">Most prediction market traders bleed capital because they bet with emotion instead of math.
+
+Solana just leveled up permissionless prediction markets with the @PantaHQ x @Nectar_finance Trading Competition ($1,500+ in prizes).
+
+Here is the ultimate guide + math alpha to master #PantaMarkets 👇 (1/6)</div>
+        </div>
+
+        <!-- Tweet 2 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 2/6 (Why Panta is 10x Faster)</span>
+            <button class="btn-secondary" onclick="copyTweet(2)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_2">Traditional prediction markets suffer from high gas fees and sluggish execution.
+
+@PantaHQ is built directly on Solana:
+⚡ Sub-second trade settlement (~400ms)
+⚡ Fraction-of-a-cent fees (< $0.001)
+⚡ Permissionless market creation (anyone can launch a market on real-world events)
+
+You trade YES or NO tokens priced $0.01 – $0.99 reflecting real-time implied probability. (2/6)</div>
+        </div>
+
+        <!-- Tweet 3 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 3/6 (The Kelly Criterion Alpha)</span>
+            <button class="btn-secondary" onclick="copyTweet(3)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_3">Don't guess your bet size. Professional sharp traders use the Kelly Criterion:
+
+f* = (b*p - q) / b
+
+If Panta has YES at $0.40 (implied 40%), but your research shows a 60% true probability:
+• Net odds b = (1 - 0.40) / 0.40 = 1.50
+• Optimal Half-Kelly Bet = 16.7% of bankroll
+• Expected Value = +$0.20 per $1 risked (+50% ROI)
+
+We built an open-source Kelly Calculator for this! (3/6)</div>
+        </div>
+
+        <!-- Tweet 4 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 4/6 (Competition Prizes)</span>
+            <button class="btn-secondary" onclick="copyTweet(4)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_4">@PantaHQ partnered with @Nectar_finance for a month-long competition:
+💰 $1,000 Leaderboard Prize Pool (Top 5 traders share)
+💰 $500 USDG Bounty Pool ($100 each for 5 top contributors)
+
+How to qualify:
+1. Sign up on Panta (https://go.panta.market/bounty)
+2. Trade at least $1 on Market 1 & Market 2
+3. Create new markets for extra consideration! (4/6)</div>
+        </div>
+
+        <!-- Tweet 5 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 5/6 (Be The House - Market Creation)</span>
+            <button class="btn-secondary" onclick="copyTweet(5)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_5">Panta isn't just for trading—you can BE the house by creating markets:
+• Crypto milestones (e.g. SOL break $300?)
+• Macro events (Fed rate cuts, CPI releases)
+• Pop culture & tech events
+
+Our portal includes a Market Creation Wizard that validates your resolution oracles and generates metadata in 1-click. (5/6)</div>
+        </div>
+
+        <!-- Tweet 6 -->
+        <div class="tweet-card">
+          <div class="tweet-header">
+            <span>Tweet 6/6 (Call to Action)</span>
+            <button class="btn-secondary" onclick="copyTweet(6)">Copy Tweet</button>
+          </div>
+          <div class="tweet-body" id="tweetText_6">Ready to test your forecasting skills and climb the @Nectar_finance x @PantaHQ leaderboard?
+
+1. Explore the interactive Analytics Hub & Kelly Calculator: https://github.com/duongynhi000005-oss/panta-nectarfi-analytics-hub
+2. Trade your first $1+ on Panta: https://go.panta.market/bounty
+3. Join the community on Discord!
+
+Shoutout to @SuperteamNG for empowering Web3 builders globally. Let the trading begin! #PantaMarkets (6/6)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 5: Infographics & AMM Architecture -->
+    <div id="tabInfographics" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2><span>📊</span> Panta Market Protocol Mechanics & Mathematical Proofs</h2>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem; margin-top:1rem;">
+          <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.25rem; border-radius:var(--radius-sm);">
+            <h3 style="color:var(--panta-green); margin-bottom:0.5rem; font-size:1rem;">1. Binary Token Mechanics</h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">
+              Every market holds a collateral pool backing complimentary pairs: 1 YES + 1 NO = $1.00 USD. If an event occurs, YES shares redeem $1.00 each while NO shares expire worthless.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.25rem; border-radius:var(--radius-sm);">
+            <h3 style="color:var(--cyber-cyan); margin-bottom:0.5rem; font-size:1rem;">2. Instant Finality on Solana</h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">
+              Leveraging Solana's ~400ms block times and high throughput, trades execute without high slippage, enabling high-frequency quantitative market making and instantaneous arbitrage resolution.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.25rem; border-radius:var(--radius-sm);">
+            <h3 style="color:var(--nectar-gold); margin-bottom:0.5rem; font-size:1rem;">3. Risk-Optimized Kelly Sizing</h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">
+              By employing Half-Kelly staking, traders maintain positive compound growth rates while significantly reducing portfolio drawdown variance during volatile market regimes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast">Copied to clipboard!</div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Panta x NectarFi Analytics Hub & Kelly Calculator • Superteam Earn Bounty ($500 USDG)</p>
+    <p style="margin-top:0.35rem; font-size:0.75rem; color:var(--text-muted);">
+      Built for the Solana community • Open source under MIT License • Tagging @PantaHQ @Nectar_finance @SuperteamNG #PantaMarkets
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
