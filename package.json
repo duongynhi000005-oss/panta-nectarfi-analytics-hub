@@ -1,0 +1,22 @@
+{
+  "name": "panta-nectarfi-analytics-hub",
+  "version": "1.0.0",
+  "description": "Interactive Analytics Hub, Kelly Criterion Calculator & Viral Content Suite for Panta Market x NectarFi Competition",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "node -e \"const http = require('http'); const fs = require('fs'); const path = require('path'); const server = http.createServer((req, res) => { let filePath = path.join(__dirname, 'web', req.url === '/' ? 'index.html' : req.url); fs.readFile(filePath, (err, data) => { if (err) { res.writeHead(404); res.end('Not Found'); return; } let ext = path.extname(filePath); let contentType = ext === '.css' ? 'text/css' : ext === '.js' ? 'text/javascript' : 'text/html'; res.writeHead(200, { 'Content-Type': contentType }); res.end(data); }); }); server.listen(3000, () => console.log('Portal running at http://localhost:3000'));\""
+  },
+  "keywords": [
+    "solana",
+    "panta-market",
+    "nectarfi",
+    "prediction-market",
+    "kelly-criterion",
+    "expected-value",
+    "defi"
+  ],
+  "author": "duongynhi000005-oss",
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  analytics-hub:
+    build: .
+    container_name: panta-nectarfi-analytics-hub
+    ports:
+      - "3000:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+    restart: unless-stopped
