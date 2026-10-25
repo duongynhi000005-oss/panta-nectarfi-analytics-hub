@@ -3,11 +3,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node: 18+](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 [![Tests: 10/10 Passed](https://img.shields.io/badge/Tests-10%2F10%20Passed-brightgreen.svg)](#verifiability--testing)
+[![Live Demo: GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00ffa3.svg)](https://duongynhi000005-oss.github.io/panta-nectarfi-analytics-hub/)
 [![Docker: Ready](https://img.shields.io/badge/Docker%20Compose-1--Click-blueviolet.svg)](#1-command-reproduction-with-docker-compose)
 [![Sponsor: Panta x NectarFi](https://img.shields.io/badge/Bounty-Panta%20x%20NectarFi-00ffa3.svg)](https://superteam.fun/earn/listing/panta-x-nectarfi-trading-competition-bounty)
 
 > **Submission for Superteam Earn: Panta x NectarFi Trading Competition Bounty**  
 > **Prize Pool**: **$500 USDG** ($100 each for top 5 contributors) + **$1,000 Leaderboard Prize Pool**  
+> **Live Web Demo**: [https://duongynhi000005-oss.github.io/panta-nectarfi-analytics-hub/](https://duongynhi000005-oss.github.io/panta-nectarfi-analytics-hub/)  
 > **Official Listing**: [Superteam Earn Panta x NectarFi Bounty](https://superteam.fun/earn/listing/panta-x-nectarfi-trading-competition-bounty)  
 > **Target Accounts & Tags**: `@PantaHQ`, `@Nectar_finance`, `@SuperteamNG`, `#PantaMarkets`  
 
